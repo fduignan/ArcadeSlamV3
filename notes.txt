@@ -1,0 +1,81 @@
+Breakout notes:
+Memory consumption: If sprites are used: 
+x,y [4 bytes]
+w,h [2 bytes]
+visible [1 byte]
+pointer to image [2 bytes]
+Total : 9 bytes per sprite.
+
+512 Bytes of RAM available - can't use all of this.
+This allows for one bat and maybe 40 blocks.  Block arrangement: 10 x 4? ok
+CORRECTION: 10x4 led to stack overflow (blocks are allocated on the stack
+to allow multiple games be played)  - reverting to 10x3
+Colours: Orange Yellow Green Blue (at the lighter end of the spectrum)
+Bat colour: white
+Ball: This is a sprite with additional attributes : X velocity and Y velocity.
+
+Drawing the court: Only one visible boudary : at the top just below score
+
+How many bytes for 4 x 10 = 40 x 9 = 360 bytes probably ok - maybe worth a try.
+Will allow for 24 pixel wide blocks
+
+
+Score : 0000        Balls : 3
+-----------------------------
+
+
+
+Block size: 24 wide (a lot maybe) - may need to rethink.
+Block height : 10 pixels.  
+Block should have a single pixel boundary to emphasize its blockiness.
+Height of area below score and above blocks: 40 pixels.
+
+
+setup()
+{
+InitScreen etc.
+Display blocks
+Display bat
+set initial velocity and position of ball.
+Set court boundary and draw (white)
+Display ballcount and score
+}
+
+loop()
+{
+    update ball position
+    if ball hits bat
+    change sign of Ball-> yVelocity 
+    if ball hits side of Screen
+        change sign of Ball->xVelocity
+    if ball hits top of screen
+        change sign of Ball->yVelocity        
+    if Ball hits block
+        Make block invisible
+        update score count
+        negate ball y velocity (what if it hits the side of a block?? - how do I detect this?)
+    if Ball leaves arena
+        Decrement Ball Count
+        update ballcount display
+        if Ball count is zero
+            game over - you lose
+        else
+            set initial velocity and position of ball.
+
+    All blocks invisible?
+        Game over ->Victory
+    
+}
+
+Adding sound: It would be nice to add sound.  
+Could use energia sound output but it may be blocking.  If so will have to develop other mechanism using timer interrupts.
+Could use a buzzer.
+Sound(freq,duration)
+    -> Use IRQ on pin for callback
+    -> Count half cycles and stop when count complete.
+    -> To start sound, calculate number of half cycles (2*durataion*frequency), set timer freq and start.
+    -> Watch for CPU load (very efficient callback needed)
+
+
+
+

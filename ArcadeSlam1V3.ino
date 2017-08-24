@@ -33,14 +33,14 @@ void loop()
   Screen.fillRectangle(0,0,240,320,0);
   Screen.putText("Arcade",6,70,50, RGBToWord(0x1f,0x1f,0xff), 0);
   Screen.putText("Slam!",5,125,50, RGBToWord(0xff,0xff,0x0), 0);
-  Screen.putText("Press Left for Breakout", 23, 5, 100, RGBToWord(0xff,0x3f,0x3f), 0);
+  Screen.putText("Press Left for Brici", 20, 5, 100, RGBToWord(0xff,0x3f,0x3f), 0);
   Screen.putText("Press Right for Invaders", 24, 5, 120, RGBToWord(0x1f,0xff,0x1f), 0);
   while (GameStarted == 0)
   {
     if (LeftPressed())
     {
       GameStarted = 1;
-      PlayBreakout();
+      PlayBrici();
     }
     if (RightPressed())
     {
@@ -50,7 +50,7 @@ void loop()
     random(100); // cycle the random number generator
   }
 }
-void PlayBreakout()
+void PlayBrici()
 {
   // This game is pushing the limits of memory.  It seems to be about 1 or 2 bytes short of blowing the stack up. :o)
   #define BLOCKCOUNT 30
@@ -67,7 +67,7 @@ void PlayBreakout()
   uint8_t Victory = 0;
   // put your setup code here, to run once:
   Screen.fillRectangle(0,0,240,320,0);  
-  Screen.putText("MCU Breakout", 12, 10, 40, RGBToWord(0xff,0xff,0xff), RGBToWord(0,0,0));
+  Screen.putText("Brici", 5, 10, 40, RGBToWord(0xff,0xff,0xff), RGBToWord(0,0,0));
   delay(500);
   Screen.fillRectangle(0,0,240,320,0);
   for (Index = BallCount; Index > 0; Index--)
